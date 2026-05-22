@@ -363,7 +363,7 @@ function getDataCoverageStats() {
 
 // ------------------- Mapbox 初始化 -------------------
 mapboxgl.accessToken =
-  "pk.eyJ1IjoidG95dWt0aCIsImEiOiJjbTdmeDRtZmswbW5yMmpxenN1cGdtMnN1In0.hzy7P7NJDCSYkc9gsunmyw";
+  "pk.eyJ1IjoidG95dWt0aCIsImEiOiJjbXBnbmNrOWMwa2RrMnFyMHo2am05dDV5In0.gCJlaIiANqX1jThqikKvKw";
 
 const map = new mapboxgl.Map({
   container: "map",
