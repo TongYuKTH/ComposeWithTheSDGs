@@ -1,0 +1,95 @@
+/* ========== SDG Indicator Tooltip Styles ========== */
+
+.sdg-indicator-tooltip {
+  position: absolute;
+  left:0;
+  top: 100%;
+  margin-left: 8px;
+  background: white;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 12px 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+  min-width: 180px;
+  max-width: 180px;
+  font-size: 11px;
+  line-height: 1.5;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateX(-10px);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  overflow-wrap: break-word;
+}
+
+/* 如果屏幕宽度不够，tooltip显示在下方 */
+@media (max-width: 1200px) {
+  .sdg-indicator-tooltip {
+    left: 0;
+    top: 100%;
+    margin-left: 0;
+    margin-top: 8px;
+    transform: translateY(-10px);
+  }
+}
+
+.sdg-indicator-tooltip .indicator-header {
+  font-size: 11px;
+  font-weight: 500;
+  color: #2c3e50;
+  margin-bottom: 8px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid #3498db;
+}
+
+
+.sdg-indicator-tooltip .indicator-description {
+  font-size: 11px;
+  color: #555;
+  margin-bottom: 8px;
+  line-height: 1.6;
+}
+
+.sdg-indicator-tooltip .indicator-note {
+  font-size: 11px;
+  color: #e67e22;
+  font-style: italic;
+  margin-top: 4px;
+}
+
+
+.sdg-indicator-tooltip::after {
+  content: '';
+  position: absolute;
+  left: -9px;
+  top: 15px;
+  width: 0;
+  height: 0;
+  border-top: 8px solid transparent;
+  border-bottom: 8px solid transparent;
+  border-right: 8px solid #e0e0e0;
+  z-index: -1;
+}
+
+  
+  .sdg-indicator-tooltip::after {
+    left: 20px;
+    top: -9px;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-bottom: 8px solid #e0e0e0;
+    border-top: none;
+  }
+
+
+/* 只在hover时显示tooltip，不改变label样式 */
+#sdg_checkbox_list label:hover .sdg-indicator-tooltip {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+@media (max-width: 1200px) {
+  #sdg_checkbox_list label:hover .sdg-indicator-tooltip {
+    transform: translateY(0);
+  }
+}

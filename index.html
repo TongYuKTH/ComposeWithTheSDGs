@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SDG Map Prototype</title>
+
+  <!-- Tone.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.min.js"></script>
+
+  <!-- Mapbox -->
+  <link href="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.css" rel="stylesheet" />
+  <script src="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.js"></script>
+
+  <!-- 样式 -->
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="note-positions.css">
+  <link rel="stylesheet" href="sdgindicatortooltip.css">
+</head>
+
+<body>
+
+  <!-- 顶部标题 -->
+  <header id="header">
+    <h1 class="header-title">Compose with the SDGs</h1>
+    <!-- 年份控制 -->
+    <div id="year-area">
+      <div class="year-title">Year:</div>
+      <div id="year_stepper">
+        <button id="decrease_year" type="button">−</button>
+        <span id="current_year">2024</span>
+        <button id="increase_year" type="button">+</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- 提示框 -->
+  <div id="message-box" class="hidden"></div>
+
+  <!-- 主体区域 -->
+  <div id="main">
+    <!-- 左侧：SDG选择 -->
+    <aside id="left-panel">
+      <h2>SDG Selection <br><small class="note-text">NOTE: Each SDG is represented by a single indicator for visualization purposes only</small></h2>
+      <div id="sdg_checkbox_list"></div>
+
+      <!-- Start Compose 按钮 -->
+      <button id="start-compose-btn" class="compose-toggle-btn">Start Compose</button>
+    </aside>
+
+    <!-- 右侧：地图 -->
+    <section id="map-area">
+      <div id="map"></div>
+    </section>
+  </div>
+
+  <!-- 下方作曲区域：默认隐藏 -->
+  <footer id="composer-area" class="hidden">
+    <div id="top-area">
+      <button id="play-melody">▶ Play</button>
+      <button id="shuffle-notes"> Shuffle</button>
+      <button id="clear-all">Clear All</button>
+      <button id="save-composition"> Save</button>
+      <label class="tempo-label">Tempo</label>
+      <input id="tempo-input" type="number" min="40" max="240" value="86" class="tempo-input">
+      <span class="tempo-unit">BPM</span>
+      <!-- 调式切换按钮组 -->
+      <button id="mode-toggle" class="mode-toggle-btn" data-mode="major">
+        Major Scale
+      </button>
+
+      <button id="close-compose-btn" class="close-compose-btn"> ✕ </button>
+    </div>
+
+    <div class="staff-group">
+      <!-- 高音谱 -->
+      <div class="staff" id="treble-staff">
+        <!-- 五线 -->
+        <div class="staff-line line-1"></div>
+        <div class="staff-line line-2"></div>
+        <div class="staff-line line-3"></div>
+        <div class="staff-line line-4"></div>
+        <div class="staff-line line-5"></div>
+
+        <!-- 高音谱号 -->
+        <div class="treble_clef">𝄞</div>
+
+        <!-- 调号容器 -->
+        <div class="key-signature" id="key-signature"></div>
+
+        <!-- 小节分界线 -->
+        <!-- <div class="bar-line start"></div>
+        <div class="bar-line first"></div>
+        <div class="bar-line second"></div> -->
+
+        <!-- 音符容器 - 8个占位符 -->
+        <div class="note-container" id="treble-container">
+          <div class="note-placeholder" data-position="1">1</div>
+          <div class="note-placeholder" data-position="2">2</div>
+          <div class="note-placeholder" data-position="3">3</div>
+          <div class="note-placeholder" data-position="4">4</div>
+          <div class="note-placeholder" data-position="5">5</div>
+          <div class="note-placeholder" data-position="6">6</div>
+          <div class="note-placeholder" data-position="7">7</div>
+          <div class="note-placeholder" data-position="8">8</div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- 脚本加载 -->
+  <script type="module" src="NewScript.js"></script>
+  <script type="module" src="notemapping.js"></script>
+
+  <!-- 浮动卡片（显示在点击国家附近） -->
+  <div id="floating-info-card" class="sdg-card hidden">
+    <div class="card-header">
+      <span class="country-name"></span>
+      <span class="close-btn">&times;</span>
+    </div>
+    <div class="card-content">
+      <div id="floating-sdg-items"></div>
+      <button id="add-to-staff-btn" class="add-to-staff-btn">+ Add to Staff</button>
+    </div>
+  </div>
+
+</body>
+
+</html>

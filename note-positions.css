@@ -1,0 +1,230 @@
+/* ========== 五线谱和音符位置配置 ========== */
+/*
+  统一方案：单音符和和弦都使用 .chord 容器
+  
+  HTML 结构（统一）：
+    <div class="note-group">
+      <div class="chord">
+        <div class="quarter-note chord-note note-value-71-80">
+        <!-- 和弦时有多个 chord-note -->
+  
+  音符位置映射（top 值越小 = 位置越高 = 音高越高）：
+  0-10:   C4 → 100px (下加一线) 最低音 ⬇️
+  11-20:  D4 → 94px
+  21-30:  E4 → 88px (第5线)
+  31-40:  F4 → 82px
+  41-50:  G4 → 76px (第4线)
+  51-60:  A4 → 70px
+  61-70:  B4 → 64px (第3线，中央)
+  71-80:  C5 → 58px
+  81-90:  D5 → 52px (第2线)
+  91-100: E5 → 46px (第1-2线间) 最高音 ⬆️
+*/
+
+/* ========== 五线谱线条位置 ========== */
+.staff-line.line-1 { top: 56px !important; }
+.staff-line.line-2 { top: 68px !important; }
+.staff-line.line-3 { top: 80px !important; }
+.staff-line.line-4 { top: 92px !important; }
+.staff-line.line-5 { top: 104px !important; }
+
+/* ========== 高音谱号位置 ========== */
+.treble_clef {
+  top: 80px !important;
+}
+
+/* ========== 小节线位置 ========== */
+.bar-line {
+  top: 56px !important;
+  height: 48px !important;
+}
+
+/* ========== 音符容器位置 ========== */
+.note-container {
+  top: -0px !important;
+  align-items: flex-start !important;
+}
+
+/* ========== 音符占位符 ========== */
+.note-placeholder {
+  height: 120px !important;
+  align-items: flex-start !important;
+  padding-top: 20px;
+}
+
+/* ========== 音符组容器 ========== */
+.note-group {
+  height: 120px !important;
+  align-items: flex-start !important;
+  justify-content: flex-start !important;
+  padding-top: 20px;
+  position: relative !important;
+}
+
+/* ========== 🔥 和弦容器：禁用 flex 布局，使用绝对定位 ========== */
+.chord {
+  display: block !important;      /* 覆盖 style.css 的 flex */
+  position: relative !important;
+  height: 120px !important;
+  width: 20px !important;
+  
+  /* 移除 flex 相关属性 */
+  flex-direction: unset !important;
+  align-items: unset !important;
+  gap: 0px !important;
+}
+
+/* ========== 和弦中的所有音符：绝对定位 ========== */
+.chord .chord-note {
+  position: absolute !important;
+  margin-bottom: 0 !important;
+  left: 0 !important;
+}
+
+/* ========== 音符位置映射 ========== */
+.chord .chord-note.note-value-0-10 { 
+  top: 90px !important; 
+}
+
+.chord .chord-note.note-value-11-20 { 
+  top: 84px !important; 
+}
+
+.chord .chord-note.note-value-21-30 { 
+  top: 78px !important; 
+}
+
+.chord .chord-note.note-value-31-40 { 
+  top: 72px !important; 
+}
+
+.chord .chord-note.note-value-41-50 { 
+  top: 66px !important; 
+}
+
+.chord .chord-note.note-value-51-60 { 
+  top: 60px !important; 
+}
+
+.chord .chord-note.note-value-61-70 { 
+  top: 54px !important; 
+}
+
+.chord .chord-note.note-value-71-80 { 
+  top: 48px !important; 
+}
+
+.chord .chord-note.note-value-81-90 { 
+  top: 42px !important; 
+}
+
+.chord .chord-note.note-value-91-100 { 
+  top: 36px !important; 
+}
+
+/* ========== 下加线 ========== */
+.ledger-line-below {
+  position: absolute;
+  width: 22px;
+  height: 2px;
+  background: #2c3e50;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 0;
+}
+
+.ledger-line-c {
+  top: 100px;
+}
+
+/* ========== 国家标签 ========== */
+.note-label {
+  top: 10px !important;
+  left: -5px;
+  bottom: auto !important;
+  position: absolute !important;
+}
+
+/* ========== 删除按钮 ========== */
+.delete-note-btn {
+  top: 30px !important;
+}
+
+/* ========== 符杆 ========== */
+/* 
+  五线谱符杆规则：
+  - 第三线以下（value ≤ 60）：符杆在符头右侧，向上延伸 ↑
+  - 第三线及以上（value > 60）：符杆在符头左侧，向下延伸 ↓
+  
+  符头宽度: 16px，高度: 12px
+  符杆宽度: 2px
+*/
+
+/* 默认符杆朝上：在符头右侧向上延伸（用于 value ≤ 60） */
+.note-stem {
+  position: absolute !important;
+  width: 2px !important;
+  height: 35px !important;
+  /* 符杆从符头顶部向上延伸 */
+  bottom: 6px !important;
+  top: auto !important;
+  /* 符杆在符头右边缘 */
+  right: 1px !important;
+  left: auto !important;
+}
+
+.chord .chord-note .note-stem {
+  height: 50px !important;
+  bottom: 6px !important;
+  top: auto !important;
+  right: 1px !important;
+  left: auto !important;
+  display: block !important;
+}
+
+/* 只显示第一个音符的符杆（符杆朝上时，从最低音延伸） */
+.chord .chord-note:first-child .note-stem {
+  display: block !important;
+}
+
+.chord .chord-note:not(:first-child) .note-stem {
+  /* display: none !important; */
+}
+
+/* ========== 符头 ========== */
+.note-head {
+  position: relative !important;
+  background-color: currentColor !important;
+}
+
+/* ========== 符杆朝下样式 (value > 60，第三线及以上) ========== */
+/*
+  符杆朝下时：
+  - 符杆在符头左侧
+  - 从符头向下延伸
+*/
+.stem-down .note-stem {
+  /* 符杆在符头左边缘 */
+  right: auto !important;
+  left: 1px !important;
+  /* 符杆从符头底部向下延伸 */
+  bottom: auto !important;
+  top: 6px !important;
+}
+
+/* 和弦中符杆朝下的处理 */
+.chord .chord-note.stem-down .note-stem {
+  right: auto !important;
+  left: 1px !important;
+  bottom: auto !important;
+  top: 6px !important;
+}
+
+/* 当和弦中有符杆朝下的音符时，只显示最后一个（最高音）的符杆 */
+.chord:has(.stem-down) .chord-note .note-stem {
+  display: none !important;
+}
+
+.chord:has(.stem-down) .chord-note.stem-down:last-of-type .note-stem {
+  display: block !important;
+}
